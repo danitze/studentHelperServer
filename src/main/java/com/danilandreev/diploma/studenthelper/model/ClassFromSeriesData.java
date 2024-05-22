@@ -9,7 +9,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StartDateWithIntervalDto {
+public class ClassFromSeriesData {
     private Date startDate;
     private Long interval;
+    private Boolean isOnline;
+    private String place;
 }

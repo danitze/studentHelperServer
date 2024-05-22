@@ -19,4 +19,6 @@ public class UniversityClassDto {
     private Date startDate;
     private List<GroupDto> universityGroups;
     private UserDto lecturer;
+    private Boolean isOnline;
+    private String place;
 }

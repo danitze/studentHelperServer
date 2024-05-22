@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateClassSeriesDto {
     private Long lecturerId;
-    private List<StartDateWithIntervalDto> startDatesWithIntervals;
+    private List<ClassFromSeriesData> classFromSeriesDataList;
     private String disciplineName;
     private List<Long> groupIds;
     private Long classesAmount;

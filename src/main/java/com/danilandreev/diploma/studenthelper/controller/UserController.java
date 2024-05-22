@@ -22,4 +22,9 @@ public class UserController {
         return ResponseEntity.ok(userService.getById(id));
     }
 
+    @GetMapping
+    public ResponseEntity<?> getCurrentUser() {
+        return ResponseEntity.ok(userService.getCurrentUser());
+    }
+
 }

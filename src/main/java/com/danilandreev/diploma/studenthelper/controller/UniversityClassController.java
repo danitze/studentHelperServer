@@ -4,11 +4,9 @@ import com.danilandreev.diploma.studenthelper.model.CreateClassDto;
 import com.danilandreev.diploma.studenthelper.model.CreateClassSeriesDto;
 import com.danilandreev.diploma.studenthelper.service.UniversityClassService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 

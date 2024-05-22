@@ -1,11 +1,9 @@
 package com.danilandreev.diploma.studenthelper.service;
 
 import com.danilandreev.diploma.studenthelper.model.GroupDto;
-import com.danilandreev.diploma.studenthelper.model.Role;
 import com.danilandreev.diploma.studenthelper.model.User;
 import com.danilandreev.diploma.studenthelper.model.UserDto;
 import com.danilandreev.diploma.studenthelper.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,9 +47,23 @@ public class UserService {
     }
 
     @Transactional
-    public User getCurrentUser() {
+    public UserDto getCurrentUser() {
         var username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getByUsername(username);
+        return repository.findByUsername(username)
+                .map((user) -> UserDto.builder()
+                        .id(user.getId())
+                        .username(user.getUsername())
+                        .email(user.getEmail())
+                        .role(user.getRole())
+                        .firstName(user.getFirstName())
+                        .lastName(user.getLastName())
+                        .group(GroupDto.builder()
+                                .id(user.getUniversityGroup().getId())
+                                .name(user.getUniversityGroup().getName())
+                                .build()
+                        )
+                        .build())
+                .orElseThrow(() -> new UsernameNotFoundException("Користувача не знайдено"));
     }
 
     @Transactional

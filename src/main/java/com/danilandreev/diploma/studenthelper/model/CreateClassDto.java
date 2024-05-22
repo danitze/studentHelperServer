@@ -17,4 +17,6 @@ public class CreateClassDto {
     private String disciplineName;
     private List<Long> groupIds;
     private String seriesId;
+    private Boolean isOnline;
+    private String place;
 }

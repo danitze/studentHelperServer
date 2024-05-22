@@ -34,25 +34,27 @@ public class UniversityClassService {
                 groupOptional.orElseThrow(() -> new RuntimeException("Групу не знайдено"))
         ).toList();
 
-        Queue<StartDateWithIntervalDto> dates = new PriorityQueue<>(Comparator.comparing(StartDateWithIntervalDto::getStartDate));
-        for (StartDateWithIntervalDto dateWithInterval : dto.getStartDatesWithIntervals()) {
-            dates.offer(dateWithInterval);
+        Queue<ClassFromSeriesData> dates = new PriorityQueue<>(Comparator.comparing(ClassFromSeriesData::getStartDate));
+        for (ClassFromSeriesData classFromSeriesData : dto.getClassFromSeriesDataList()) {
+            dates.offer(classFromSeriesData);
         }
         for (int i = 0; i < dto.getClassesAmount(); ++i) {
-            StartDateWithIntervalDto date = dates.poll();
+            ClassFromSeriesData data = dates.poll();
             UniversityClass universityClass = UniversityClass.builder()
                     .seriesId(seriesId)
                     .disciplineName(dto.getDisciplineName())
-                    .startDate(
-                            date.getStartDate()
-                    )
+                    .startDate(data.getStartDate())
                     .universityGroups(groups)
                     .lecturer(lecturer)
+                    .isOnline(data.getIsOnline())
+                    .place(data.getPlace())
                     .build();
             dates.offer(
-                    new StartDateWithIntervalDto(
-                            new Date(date.getStartDate().getTime() + date.getInterval()),
-                            date.getInterval()
+                    new ClassFromSeriesData(
+                            new Date(data.getStartDate().getTime() + data.getInterval()),
+                            data.getInterval(),
+                            data.getIsOnline(),
+                            data.getPlace()
                     )
             );
             classRepository.save(universityClass);
@@ -84,6 +86,8 @@ public class UniversityClassService {
                 .startDate(dto.getStartDate())
                 .universityGroups(groups)
                 .lecturer(lecturer)
+                .isOnline(dto.getIsOnline())
+                .place(dto.getPlace())
                 .build();
         universityClass = classRepository.save(universityClass);
         return UniversityClassDto.builder()
@@ -107,6 +111,8 @@ public class UniversityClassService {
                                 .group(null)
                                 .build()
                 )
+                .isOnline(universityClass.getIsOnline())
+                .place(universityClass.getPlace())
                 .build();
     }
 
@@ -150,6 +156,8 @@ public class UniversityClassService {
                                 .group(null)
                                 .build()
                 )
+                .isOnline(universityClass.getIsOnline())
+                .place(universityClass.getPlace())
                 .build()).toList();
     }
 }

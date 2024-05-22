@@ -31,6 +31,12 @@ public class UniversityClass {
     @Column(name = "start_date")
     private Date startDate;
 
+    @Column(name = "is_online")
+    private Boolean isOnline;
+
+    @Column(name = "place")
+    private String place;
+
     @ManyToMany
     private List<UniversityGroup> universityGroups;
 
