@@ -37,6 +37,9 @@ public class UniversityClass {
     @Column(name = "place")
     private String place;
 
+    @Column(name = "home_task")
+    private String homeTask;
+
     @ManyToMany
     private List<UniversityGroup> universityGroups;
 

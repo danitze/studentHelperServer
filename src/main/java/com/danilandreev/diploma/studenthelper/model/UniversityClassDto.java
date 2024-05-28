@@ -21,4 +21,5 @@ public class UniversityClassDto {
     private UserDto lecturer;
     private Boolean isOnline;
     private String place;
+    private String homeTask;
 }

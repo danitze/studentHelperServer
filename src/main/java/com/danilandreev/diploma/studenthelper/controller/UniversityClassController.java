@@ -43,4 +43,11 @@ public class UniversityClassController {
         return ResponseEntity.ok(service.getAllClasses(dateFromDate, dateToDate));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getClass(
+            @PathVariable("id") Long id
+    ) {
+        return ResponseEntity.ok(service.getClass(id));
+    }
+
 }

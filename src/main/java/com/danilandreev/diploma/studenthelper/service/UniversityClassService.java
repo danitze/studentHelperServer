@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@SuppressWarnings("DuplicatedCode")
 @Service
 @RequiredArgsConstructor
 public class UniversityClassService {
@@ -113,6 +114,7 @@ public class UniversityClassService {
                 )
                 .isOnline(universityClass.getIsOnline())
                 .place(universityClass.getPlace())
+                .homeTask(universityClass.getHomeTask())
                 .build();
     }
 
@@ -158,6 +160,36 @@ public class UniversityClassService {
                 )
                 .isOnline(universityClass.getIsOnline())
                 .place(universityClass.getPlace())
+                .homeTask(universityClass.getHomeTask())
                 .build()).toList();
+    }
+
+    public UniversityClassDto getClass(Long id) {
+        return classRepository.findById(id)
+                .map((universityClass) -> UniversityClassDto.builder()
+                        .id(universityClass.getId())
+                        .seriesId(universityClass.getSeriesId())
+                        .disciplineName(universityClass.getDisciplineName())
+                        .startDate(universityClass.getStartDate())
+                        .universityGroups(
+                                universityClass.getUniversityGroups().stream().map((group) ->
+                                        GroupDto.builder().id(group.getId()).name(group.getName()).build()
+                                ).toList()
+                        )
+                        .lecturer(
+                                UserDto.builder()
+                                        .id(universityClass.getLecturer().getId())
+                                        .username(universityClass.getLecturer().getUsername())
+                                        .email(universityClass.getLecturer().getEmail())
+                                        .role(universityClass.getLecturer().getRole())
+                                        .firstName(universityClass.getLecturer().getFirstName())
+                                        .lastName(universityClass.getLecturer().getLastName())
+                                        .group(null)
+                                        .build()
+                        )
+                        .isOnline(universityClass.getIsOnline())
+                        .place(universityClass.getPlace())
+                        .homeTask(universityClass.getHomeTask())
+                        .build()).orElseThrow();
     }
 }

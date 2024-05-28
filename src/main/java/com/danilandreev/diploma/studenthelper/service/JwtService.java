@@ -21,9 +21,7 @@ public class JwtService {
     private String jwtSigningKey;
 
     public String extractUserName(String token) {
-        return extractClaim(token, claims -> {
-            return claims.get("username", String.class);
-        });
+        return extractClaim(token, claims -> claims.get("username", String.class));
     }
 
     public String generateToken(UserDetails userDetails) {
