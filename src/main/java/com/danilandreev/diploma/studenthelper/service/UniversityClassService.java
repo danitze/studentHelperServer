@@ -161,6 +161,7 @@ public class UniversityClassService {
                 .isOnline(universityClass.getIsOnline())
                 .place(universityClass.getPlace())
                 .homeTask(universityClass.getHomeTask())
+                .link(universityClass.getLink())
                 .build()).toList();
     }
 
@@ -190,6 +191,7 @@ public class UniversityClassService {
                         .isOnline(universityClass.getIsOnline())
                         .place(universityClass.getPlace())
                         .homeTask(universityClass.getHomeTask())
+                        .link(universityClass.getLink())
                         .build()).orElseThrow();
     }
 
