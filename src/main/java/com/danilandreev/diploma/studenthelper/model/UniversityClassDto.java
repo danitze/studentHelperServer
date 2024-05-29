@@ -22,4 +22,5 @@ public class UniversityClassDto {
     private Boolean isOnline;
     private String place;
     private String homeTask;
+    private String link;
 }

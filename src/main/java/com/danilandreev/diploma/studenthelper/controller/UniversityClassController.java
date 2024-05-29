@@ -1,5 +1,7 @@
 package com.danilandreev.diploma.studenthelper.controller;
 
+import com.danilandreev.diploma.studenthelper.model.AddHomeTaskDto;
+import com.danilandreev.diploma.studenthelper.model.AddLinkDto;
 import com.danilandreev.diploma.studenthelper.model.CreateClassDto;
 import com.danilandreev.diploma.studenthelper.model.CreateClassSeriesDto;
 import com.danilandreev.diploma.studenthelper.service.UniversityClassService;
@@ -48,6 +50,51 @@ public class UniversityClassController {
             @PathVariable("id") Long id
     ) {
         return ResponseEntity.ok(service.getClass(id));
+    }
+
+    @PutMapping("/{id}/hometask")
+    public ResponseEntity<?> addHomeTask(
+            @PathVariable("id") Long id,
+            @RequestBody AddHomeTaskDto dto
+    ) {
+        return ResponseEntity.ok(service.addHomeTask(id, dto));
+    }
+
+    @DeleteMapping("/{id}/hometask")
+    public ResponseEntity<?> deleteHomeTask(
+            @PathVariable("id") Long id
+    ) {
+        return ResponseEntity.ok(service.deleteHomeTask(id));
+    }
+
+    @PutMapping("/{id}/link")
+    public ResponseEntity<?> addLink(
+            @PathVariable("id") Long id,
+            @RequestBody AddLinkDto dto
+    ) {
+        return ResponseEntity.ok(service.addLink(id, dto));
+    }
+
+    @PutMapping("/series/{seriesId}/link")
+    public ResponseEntity<?> addLinkToSeries(
+            @PathVariable("seriesId") String seriesId,
+            @RequestBody AddLinkDto dto
+    ) {
+        return ResponseEntity.ok(service.addLinkToSeries(seriesId, dto));
+    }
+
+    @DeleteMapping("/{id}/link")
+    public ResponseEntity<?> deleteLink(
+            @PathVariable("id") Long id
+    ) {
+        return ResponseEntity.ok(service.deleteLink(id));
+    }
+
+    @DeleteMapping("/series/{seriesId}/link")
+    public ResponseEntity<?> deleteLinkFromSeries(
+            @PathVariable("seriesId") String seriesId
+    ) {
+        return ResponseEntity.ok(service.deleteLinkFromSeries(seriesId));
     }
 
 }

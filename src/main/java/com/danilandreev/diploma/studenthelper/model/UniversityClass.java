@@ -40,6 +40,9 @@ public class UniversityClass {
     @Column(name = "home_task")
     private String homeTask;
 
+    @Column(name = "link")
+    private String link;
+
     @ManyToMany
     private List<UniversityGroup> universityGroups;
 

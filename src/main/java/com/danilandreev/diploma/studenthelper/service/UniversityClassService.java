@@ -130,10 +130,10 @@ public class UniversityClassService {
                     toDate,
                     user.getUniversityGroup()
             );
-            case TEACHER -> classRepository.findUniversityClassesByStartDateBetweenAndLecturer(
+            case TEACHER -> classRepository.findUniversityClassesForLecturer(
                     fromDate,
                     toDate,
-                    user
+                    user.getId()
             );
             case ADMIN -> List.of();
         };
@@ -191,5 +191,62 @@ public class UniversityClassService {
                         .place(universityClass.getPlace())
                         .homeTask(universityClass.getHomeTask())
                         .build()).orElseThrow();
+    }
+
+    public String addHomeTask(
+            Long id,
+            AddHomeTaskDto dto
+    ) {
+        UniversityClass universityClass = classRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Class not found"));
+        universityClass.setHomeTask(dto.getHomeTask());
+        classRepository.save(universityClass);
+        return "OK";
+    }
+
+    public String deleteHomeTask(Long id) {
+        UniversityClass universityClass = classRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Class not found"));
+        universityClass.setHomeTask(null);
+        classRepository.save(universityClass);
+        return "OK";
+    }
+
+    public String addLink(
+            Long id,
+            AddLinkDto dto
+    ) {
+        UniversityClass universityClass = classRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Class not found"));
+        universityClass.setLink(dto.getLink());
+        classRepository.save(universityClass);
+        return "OK";
+    }
+
+    public String deleteLink(Long id) {
+        UniversityClass universityClass = classRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Class not found"));
+        universityClass.setLink(null);
+        classRepository.save(universityClass);
+        return "OK";
+    }
+
+    @Transactional
+    public String addLinkToSeries(
+            String seriesId,
+            AddLinkDto dto
+    ) {
+        List<UniversityClass> universityClasses = classRepository.findAllBySeriesId(seriesId);
+        universityClasses.forEach(universityClass -> universityClass.setLink(dto.getLink()));
+        classRepository.saveAll(universityClasses);
+        return "OK";
+    }
+
+    @Transactional
+    public String deleteLinkFromSeries(String seriesId) {
+        List<UniversityClass> universityClasses = classRepository.findAllBySeriesId(seriesId);
+        universityClasses.forEach(universityClass -> universityClass.setLink(null));
+        classRepository.saveAll(universityClasses);
+        return "OK";
     }
 }

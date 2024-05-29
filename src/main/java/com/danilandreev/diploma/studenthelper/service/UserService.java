@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -57,10 +59,12 @@ public class UserService {
                         .role(user.getRole())
                         .firstName(user.getFirstName())
                         .lastName(user.getLastName())
-                        .group(GroupDto.builder()
-                                .id(user.getUniversityGroup().getId())
-                                .name(user.getUniversityGroup().getName())
-                                .build()
+                        .group(
+                                Optional.ofNullable(user.getUniversityGroup())
+                                        .map((group) -> GroupDto.builder()
+                                                .id(group.getId())
+                                                .name(group.getName())
+                                                .build()).orElse(null)
                         )
                         .build())
                 .orElseThrow(() -> new UsernameNotFoundException("Користувача не знайдено"));
